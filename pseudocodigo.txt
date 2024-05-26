@@ -1,0 +1,249 @@
+Clase Estudiante
+    Atributos:
+        nombre: String
+        apellido: String
+        notas: Lista de enteros
+    Métodos:
+        nombreCompleto():
+            Retorna nombre + " " + apellido
+
+        agregarNota(nota: Entero):
+            notas.agregar(nota)
+
+        cambiarNota(indice: Entero, nuevaNota: Entero):
+            Si indice >= 0 y indice < tamaño(notas)
+                notas[indice] = nuevaNota
+
+        eliminarNota(indice: Entero):
+            Si indice >= 0 y indice < tamaño(notas)
+                notas.eliminar(indice)
+
+        mostrarCalificaciones():
+            Imprimir "Calificaciones de " + nombreCompleto() + ":"
+            Para i desde 0 hasta tamaño(notas)-1
+                Imprimir (i + 1) + ". " + notas[i]
+
+        calcularPromedio():
+            Si notas está vacía
+                Retornar 0.0
+            suma = sumar todos los elementos de notas
+            Retornar suma / tamaño(notas)
+
+        cambiarNombre(nuevoNombre: String):
+            nombre = nuevoNombre
+
+        cambiarApellido(nuevoApellido: String):
+            apellido = nuevoApellido
+
+obtenerEntradaNumerica():
+    Leer valor
+    Mientras valor no es un entero válido
+        Imprimir "Entrada inválida. Por favor, ingrese un número: "
+        Leer valor
+    Retornar valor
+
+obtenerEntradaTexto():
+    Leer texto
+    Retornar texto
+
+deseaReintentar():
+    Imprimir "¿Desea reintentar? (s/n): "
+    Leer opcion
+    Retornar (opcion == 's' o opcion == 'S')
+
+importarDesdeCSV(estudiantes, nombreArchivo):
+    Abrir archivo nombreArchivo para lectura
+    Si no se puede abrir
+        Imprimir "No se pudo abrir el archivo."
+        Retornar
+    Limpiar lista estudiantes
+    Mientras se pueda leer una línea del archivo
+        Dividir línea en partes por comas
+        Crear un objeto Estudiante
+        Asignar partes a nombre, apellido y notas del estudiante
+        Agregar estudiante a la lista de estudiantes
+    Cerrar archivo
+    Imprimir "Datos importados correctamente."
+
+exportarACSV(estudiantes, nombreArchivo):
+    Abrir archivo nombreArchivo para escritura
+    Si no se puede abrir
+        Imprimir "No se pudo abrir el archivo."
+        Retornar
+    Para cada estudiante en estudiantes
+        Escribir nombre, apellido y notas del estudiante en el archivo
+    Cerrar archivo
+    Imprimir "Datos exportados correctamente."
+
+swap(a, b):
+    temp = a
+    a = b
+    b = temp
+
+partition(arr, low, high):
+    pivot = arr[high].calcularPromedio()
+    i = low - 1
+    Para j desde low hasta high - 1
+        Si arr[j].calcularPromedio() > pivot
+            i = i + 1
+            swap(arr[i], arr[j])
+    swap(arr[i + 1], arr[high])
+    Retornar i + 1
+
+quicksort(arr, low, high):
+    Si low < high
+        pi = partition(arr, low, high)
+        quicksort(arr, low, pi - 1)
+        quicksort(arr, pi + 1, high)
+
+insertsort(arr):
+    Para i desde 1 hasta tamaño(arr) - 1
+        key = arr[i]
+        j = i - 1
+        Mientras j >= 0 y arr[j].calcularPromedio() < key.calcularPromedio()
+            arr[j + 1] = arr[j]
+            j = j - 1
+        arr[j + 1] = key
+
+mostrarEstudiantesOrdenadosPorPromedio(estudiantes):
+    estudiantesOrdenados = copia de estudiantes
+    quicksort(estudiantesOrdenados, 0, tamaño(estudiantesOrdenados) - 1)
+    Imprimir "Estudiantes ordenados por promedio:"
+    Para cada estudiante en estudiantesOrdenados
+        Imprimir estudiante.nombreCompleto() + " - Promedio: " + estudiante.calcularPromedio()
+
+deseaExportarAntesDeSalir():
+    Imprimir "¿Desea exportar los datos antes de salir? (s/n): "
+    Leer opcion
+    Retornar (opcion == 's' o opcion == 'S')
+
+main():
+    estudiantes = lista vacía
+    salir = falso
+    Imprimir "Bienvenido al sistema de gestión de estudiantes."
+    Hacer
+        Imprimir menú
+        Leer opcion
+        Segun opcion
+            Caso 1:
+                Leer nombre
+                Leer apellido
+                estudiantes.agregar({nombre, apellido, lista vacía})
+                Imprimir "Estudiante agregado correctamente."
+            Caso 2:
+                Reintentar = falso
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    Leer nota
+                    Si nota está en el rango correcto
+                        estudiantes[seleccion].agregarNota(nota)
+                        Imprimir "Nota agregada correctamente."
+                    Si no
+                        Imprimir "Nota fuera de rango."
+                        Reintentar = deseaReintentar()
+                Si no
+                    Imprimir "Selección inválida."
+                    Reintentar = deseaReintentar()
+            Caso 3:
+                Reintentar = falso
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    Mostrar calificaciones del estudiante seleccionado
+                    Leer indiceNota
+                    Si indiceNota es válido
+                        Leer nuevaNota
+                        Si nuevaNota está en el rango correcto
+                            estudiantes[seleccion].cambiarNota(indiceNota, nuevaNota)
+                            Imprimir "Nota cambiada correctamente."
+                        Si no
+                            Imprimir "Nota fuera de rango."
+                            Reintentar = deseaReintentar()
+                    Si no
+                        Imprimir "Selección de nota inválida."
+                        Reintentar = deseaReintentar()
+                Si no
+                    Imprimir "Selección inválida."
+                    Reintentar = deseaReintentar()
+            Caso 4:
+                Reintentar = falso
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    Mostrar calificaciones del estudiante seleccionado
+                    Leer indiceNota
+                    Si indiceNota es válido
+                        estudiantes[seleccion].eliminarNota(indiceNota)
+                        Imprimir "Nota eliminada correctamente."
+                    Si no
+                        Imprimir "Selección de nota inválida."
+                        Reintentar = deseaReintentar()
+                Si no
+                    Imprimir "Selección inválida."
+                    Reintentar = deseaReintentar()
+            Caso 5:
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    estudiantes[seleccion].mostrarCalificaciones()
+                Si no
+                    Imprimir "Selección inválida."
+            Caso 6:
+                Reintentar = falso
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    Leer nuevoNombre
+                    Leer nuevoApellido
+                    estudiantes[seleccion].cambiarNombre(nuevoNombre)
+                    estudiantes[seleccion].cambiarApellido(nuevoApellido)
+                    Imprimir "Nombre y apellido cambiados correctamente."
+                Si no
+                    Imprimir "Selección inválida."
+                    Reintentar = deseaReintentar()
+            Caso 7:
+                Reintentar = falso
+                Si estudiantes está vacío
+                    Imprimir "No hay estudiantes registrados."
+                    Romper
+                Mostrar lista de estudiantes
+                Leer seleccion
+                Si seleccion es válida
+                    estudiantes.eliminar(seleccion)
+                    Imprimir "Estudiante eliminado correctamente."
+                Si no
+                    Imprimir "Selección inválida."
+                    Reintentar = deseaReintentar()
+            Caso 8:
+                mostrarEstudiantesOrdenadosPorPromedio(estudiantes)
+            Caso 9:
+                Leer nombreArchivo
+                importarDesdeCSV(estudiantes, nombreArchivo)
+            Caso 10:
+                Leer nombreArchivo
+                exportarACSV(estudiantes, nombreArchivo)
+            Caso 0:
+                Si deseaExportarAntesDeSalir()
+                    Leer nombreArchivo
+                    exportarACSV(estudiantes, nombreArchivo)
+                salir = verdadero
+            Default:
+                Imprimir "Opción inválida. Intente de nuevo."
+    Mientras no salir
+    Imprimir "Gracias por usar el sistema de gestión de estudiantes."
