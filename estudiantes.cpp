@@ -5,7 +5,9 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-#include <numeric> // Incluimos la cabecera para std::accumulate
+#include <numeric> 
+#include <cstdlib>
+#include <ctime> 
 
 class Estudiante {
 public:
@@ -168,10 +170,16 @@ void insertsort(std::vector<Estudiante>& arr) {
 void mostrarEstudiantesOrdenadosPorPromedio(const std::vector<Estudiante>& estudiantes) {
     std::vector<Estudiante> estudiantesOrdenados = estudiantes;
 
-    // Usar quicksort para ordenar los estudiantes por promedio
-    quicksort(estudiantesOrdenados, 0, estudiantesOrdenados.size() - 1);
+    // Usar aleatoriamente quicksort o insertsort para ordenar los estudiantes por promedio
+    std::srand(std::time(nullptr)); // Inicializar la semilla para generar números aleatorios
+    if (std::rand() % 2 == 0) {
+        quicksort(estudiantesOrdenados, 0, estudiantesOrdenados.size() - 1);
+        std::cout << "\nEstudiantes ordenados por promedio usando quicksort:\n";
+    } else {
+        insertsort(estudiantesOrdenados);
+        std::cout << "\nEstudiantes ordenados por promedio usando insertsort:\n";
+    }
 
-    std::cout << "\nEstudiantes ordenados por promedio:\n";
     for (const auto& estudiante : estudiantesOrdenados) {
         std::cout << estudiante.nombreCompleto() << " - Promedio: " << estudiante.calcularPromedio() << std::endl;
     }
