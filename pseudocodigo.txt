@@ -107,10 +107,19 @@ insertsort(arr):
 
 mostrarEstudiantesOrdenadosPorPromedio(estudiantes):
     estudiantesOrdenados = copia de estudiantes
-    quicksort(estudiantesOrdenados, 0, tamaño(estudiantesOrdenados) - 1)
-    Imprimir "Estudiantes ordenados por promedio:"
-    Para cada estudiante en estudiantesOrdenados
+
+    // Usar aleatoriamente quicksort o insertsort para ordenar los estudiantes por promedio
+    inicializar semilla de generación de números aleatorios
+    si número aleatorio es par
+        ordenar estudiantesOrdenados usando quicksort
+        Imprimir "Estudiantes ordenados por promedio usando quicksort:"
+    sino
+        ordenar estudiantesOrdenados usando insertsort
+        Imprimir "Estudiantes ordenados por promedio usando insertsort:"
+
+    para cada estudiante en estudiantesOrdenados
         Imprimir estudiante.nombreCompleto() + " - Promedio: " + estudiante.calcularPromedio()
+
 
 deseaExportarAntesDeSalir():
     Imprimir "¿Desea exportar los datos antes de salir? (s/n): "
