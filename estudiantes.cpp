@@ -122,11 +122,54 @@ void exportarACSV(const std::vector<Estudiante>& estudiantes, const std::string&
     std::cout << "Datos exportados correctamente." << std::endl;
 }
 
+// Función de intercambio
+void swap(Estudiante& a, Estudiante& b) {
+    Estudiante temp = a;
+    a = b;
+    b = temp;
+}
+
+// Partición para Quicksort
+int partition(std::vector<Estudiante>& arr, int low, int high) {
+    float pivot = arr[high].calcularPromedio();
+    int i = low - 1;
+    for (int j = low; j <= high - 1; ++j) {
+        if (arr[j].calcularPromedio() > pivot) {
+            ++i;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+// Implementación de Quicksort
+void quicksort(std::vector<Estudiante>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
+    }
+}
+
+// Implementación de Insertion Sort
+void insertsort(std::vector<Estudiante>& arr) {
+    for (size_t i = 1; i < arr.size(); ++i) {
+        Estudiante key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j].calcularPromedio() < key.calcularPromedio()) {
+            arr[j + 1] = arr[j];
+            --j;
+        }
+        arr[j + 1] = key;
+    }
+}
+
 void mostrarEstudiantesOrdenadosPorPromedio(const std::vector<Estudiante>& estudiantes) {
     std::vector<Estudiante> estudiantesOrdenados = estudiantes;
-    std::sort(estudiantesOrdenados.begin(), estudiantesOrdenados.end(), [](const Estudiante& a, const Estudiante& b) {
-        return a.calcularPromedio() > b.calcularPromedio();
-    });
+
+    // Usar quicksort para ordenar los estudiantes por promedio
+    quicksort(estudiantesOrdenados, 0, estudiantesOrdenados.size() - 1);
 
     std::cout << "\nEstudiantes ordenados por promedio:\n";
     for (const auto& estudiante : estudiantesOrdenados) {
